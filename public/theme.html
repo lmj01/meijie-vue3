@@ -1,0 +1,106 @@
+<html class="theme-default">
+    <head>
+        <title>Theme Switch</title>
+        <style>
+            .theme-default {
+                --accent-color: #72f1b8;
+                --font-color: #34294f;
+            }
+            .theme-second {
+                --accent-color: #ffbf00;
+                --font-color: #59316b;
+            }
+            .theme-third {
+                --accent-color: #d9455f;
+                --font-color: #303960;
+            }
+            body {
+                background-color: var(--accent-color);
+                color: var(--font-color);
+            }
+            .color-select button {
+                appearance: none;
+                border: 2px solid;
+                border-radius: 9999px;
+                cursor: pointer;
+                height: 20px;
+                margin: 0 0.8rem 0.8rem 0;
+                outline: 0;
+                width: 20px;
+            }
+            .color-select button::nth-child(1) { background: #72f1b8; border-color: #34294f;}
+            .color-select button::nth-child(2) { background: #ffbf00; border-color: #59316b;}
+            .color-select button::nth-child(3) { background: #d9455f; border-color: #303960;}
+            code {
+                white-space: break-spaces;    
+            }
+        </style>
+    </head>
+    <body>
+        <p>the switch theme by js and css</p>        
+        <div class="color-select">
+            <button onclick="toggleDefaultTheme()"></button>
+            <button onclick="toggleSecondTheme()"></button>
+            <button onclick="toggleThridTheme()"></button>
+        </div>
+        <p>CSS Cascading Variables<a href="https://www.w3.org/TR/css-variables-1/">var</a></p>
+        <p>css原生变量定义语法是<code>--*</code>,使用语法是<code>var(--*)</code>,其中*表示变量名，可以是任意的</p>
+        <p>完全语法是<code>var([,]?)</code>，就是<code>var(<自定义属性名>[,<默认值>]?)</code>,变量只对复合语法的才有效果，否则这就是无效的</p>
+        <p>高级一些的玩法,可通过一个变量来控制影响其他的属性，这样适配屏幕就非常舒服了</p>
+        <code>
+            .box {
+                --columns: 4;
+                --margins: calc(24px / var(--columns));
+                --space: calc(4px * var(--columns));
+                --fontSize: calc(20px - 4 / var(--columns));
+            }
+            @media screen and (max-width: 1200px) {
+                .box {
+                    --columns: 3;
+                }
+            }
+            @media screen and (max-width: 900px) {
+                .box {
+                    --columns: 2;
+                }
+            }
+            @media screen and (max-width: 600px) {
+                .box {
+                    --columns: 1;
+                }
+            }   
+        </code>
+        <script>
+            function setTheme(themeName) {
+                localStorage.setItem('theme', themeName);
+                document.documentElement.className = themeName;
+            }
+            function toggleDefaultTheme() {
+                if (localStorage.getItem('theme') !== 'theme-default') {
+                    setTheme('theme-default');
+                }
+            }
+            function toggleSecondTheme() {
+                if (localStorage.getItem('theme') !== 'theme-second') {
+                    setTheme('theme-second');
+                }
+            }
+            function toggleThridTheme() {
+                if (localStorage.getItem('theme') !== 'theme-thirrd') {
+                    setTheme('theme-third');
+                }
+            }
+            (function(){
+                if (localStorage.getItem('theme') === 'theme-default') {
+                    setTheme('theme-default');
+                }
+                if (localStorage.getItem('theme') === 'theme-second') {
+                    setTheme('theme-second');
+                }
+                if (localStorage.getItem('theme') === 'theme-third') {
+                    setTheme('theme-third');
+                }
+            })();
+        </script>
+    </body>
+</html>
